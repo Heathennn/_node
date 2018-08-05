@@ -3,3 +3,5 @@ module.exports = {
     console.log('111');
   }
 }
+
+// console.log(__dirname)
