@@ -5,8 +5,9 @@ var fs = require('fs');
 
 http.createServer( (req, res) => {
   // chekout(req, res);
+  console.log('请求' + req.method)
   getLis(res);
-}).listen(7564, "192.168.1.105")
+}).listen(7564, '127.0.0.1')
 
 // function chekout(req, res) {
 //   // console.log(req.method + '----' + req.url + '--------host:' + req.headers.host)
