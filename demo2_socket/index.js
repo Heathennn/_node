@@ -4,8 +4,20 @@ var io = require('socket.io').listen(app)
 
 var fs = require('fs')
 
-app.listen(7564, '127.0.0.1')
+app.listen(7564, '192.168.1.102')
 
+var userId = 1;
+
+function getDate () {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth()+1;
+  var day = date.getDate();
+  var hour = date.getHours();
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+ return year+'年'+month+'月'+day+'日 '+ hour + ':'+ minute +':'+ second
+}
 function handler(req, res) {
   fs.readFile(__dirname + '/public/index.html', (err, data) => {
     if (err) return;
@@ -15,9 +27,11 @@ function handler(req, res) {
 }
 
 io.sockets.on('connection', (socket) => {
-  socket.emit('server', '服务器发送于' + new Date());
+  socket.on('joinChat', (data) => {
+    console.log('[' + data + ']' +'连接服务器127.0.0.1成功 --------------' + getDate())
+    io.sockets.emit('server', '[' + data + ']' +'连接服务器127.0.0.1成功 --------------' + getDate());
+  })
   socket.on('client', (data) => {
-    console.log('来自客户端的消息: ' + data.toString())
-    socket.emit('server', '用户消息:' + data.toString());
+    io.sockets.emit('server', '[ ' + data.name + ' ]' +':' + data.value.toString());
   })
 })

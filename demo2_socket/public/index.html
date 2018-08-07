@@ -4,22 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>大型聊天交友网站</title>
+  <style>
+    .flyBox {
+      position: fixed;
+      left: 550px;
+      top: 40px;
+      border: 1px solid red;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-  <button id="sendMessage">发送消息</button>
-  <input type="text" id="input">
+  <h1>徐猛到底行不行</h1>
+  <div class="flyBox">
+    <div>聊天框</div>
+    <button id="sendMessage">发送消息</button>
+    <input type="text" id="input">
+  </div>
   <div id="message"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script>
       var Button = document.getElementById('sendMessage');
       var Body = document.getElementsByTagName('body')[0];
       var Input = document.getElementById('input');
-      var socket = io.connect('127.0.0.1:7564');
       var num = 1;
-      Button.onclick = function () {
-        socket.emit('client', Input.value ? Input.value.trim() : '空的消息')
+      var userName = window.prompt('请输入你的用户名');
+      var socket = io.connect('192.168.1.102:7564');
+      socket.emit('joinChat', userName);
+      function send() {
+        socket.emit('client', {
+          name: userName,
+          value: Input.value.trim()
+        })
+        Input.value = '';
       }
+      Button.onclick = function () {
+        send();
+        
+      }
+      document.onkeydown = function (event) {
+        var e = event || window.event;
+        if (e && e.keyCode == 13) { //回车键的键值为13
+           send()
+        }
+    }; 
       socket.on('server', (data) => {
         var ELE_DIV = document.createElement('div')
         ELE_DIV.innerHTML = data.toString();
