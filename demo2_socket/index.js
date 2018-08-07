@@ -28,10 +28,10 @@ function handler(req, res) {
 
 io.sockets.on('connection', (socket) => {
   socket.on('joinChat', (data) => {
-    console.log('[' + data + ']' +'连接服务器127.0.0.1成功 --------------' + getDate())
-    io.sockets.emit('server', '[' + data + ']' +'连接服务器127.0.0.1成功 --------------' + getDate());
+    console.log('[' + data ? data : '游客' + ']' +'连接服务器成功 --------------' + getDate())
+    io.sockets.emit('server', '[' + data + ']' +'连接服务器成功 --------------' + getDate());
   })
   socket.on('client', (data) => {
-    io.sockets.emit('server', '[ ' + data.name + ' ]' +':' + data.value.toString());
+    io.sockets.emit('server', '[ ' + data.name ? data.name : '游客' + ' ]' +':' + data.value.toString())
   })
 })
