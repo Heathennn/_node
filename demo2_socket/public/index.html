@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <button id="sendMessage">发送消息</button>
+  <input type="text" id="input">
+  <div id="message"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+      var Button = document.getElementById('sendMessage');
+      var Body = document.getElementsByTagName('body')[0];
+      var Input = document.getElementById('input');
+      var socket = io.connect('127.0.0.1:7564');
+      var num = 1;
+      Button.onclick = function () {
+        socket.emit('client', Input.value ? Input.value.trim() : '空的消息')
+      }
+      socket.on('server', (data) => {
+        var ELE_DIV = document.createElement('div')
+        ELE_DIV.innerHTML = data.toString();
+        Body.appendChild(ELE_DIV);
+        // socket.emit('client', 'hello, i am client')
+      })
+    </script>
+</body>
+</html>
