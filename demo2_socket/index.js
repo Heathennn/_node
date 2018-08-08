@@ -4,10 +4,13 @@ var io = require('socket.io').listen(app)
 
 var fs = require('fs')
 
-app.listen(7564, '192.168.1.102')
+app.listen(7564, '192.168.1.105')
 
+// EventEmitter.defaultMaxListeners = 100;
+// emitter.setMaxListeners(100)
 var userId = 1;
 
+var names = [];
 function getDate () {
   var date = new Date();
   var year = date.getFullYear();
@@ -28,10 +31,13 @@ function handler(req, res) {
 
 io.sockets.on('connection', (socket) => {
   socket.on('joinChat', (data) => {
-    console.log('[' + data ? data : '游客' + ']' +'连接服务器成功 --------------' + getDate())
-    io.sockets.emit('server', '[' + data + ']' +'连接服务器成功 --------------' + getDate());
+    console.log('[' + (data && data !== 'null' ? data : '游客') + ']' +'连接服务器成功 --------------' + getDate())
+    io.sockets.emit('server', '[' + (data && data !== 'null' ? data : '游客') + ']' +'连接服务器成功 --------------' + getDate());
   })
   socket.on('client', (data) => {
-    io.sockets.emit('server', '[ ' + data.name ? data.name : '游客' + ' ]' +':' + data.value.toString())
+    io.sockets.emit('server', '[ ' + (data.name ? data.name : '游客') + ' ]' +':' + data.value.toString())
+  })
+  io.sockets.on('connect_error', () => {
+    console.log('退出聊天')
   })
 })

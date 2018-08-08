@@ -16,7 +16,7 @@
   </style>
 </head>
 <body>
-  <h1>徐猛到底行不行</h1>
+  <h1>gayHub</h1>
   <div class="flyBox">
     <div>聊天框</div>
     <button id="sendMessage">发送消息</button>
@@ -30,7 +30,7 @@
       var Input = document.getElementById('input');
       var num = 1;
       var userName = window.prompt('请输入你的用户名');
-      var socket = io.connect('192.168.1.102:7564');
+      var socket = io.connect('192.168.1.105:7564');
       socket.emit('joinChat', userName);
       function send() {
         socket.emit('client', {
