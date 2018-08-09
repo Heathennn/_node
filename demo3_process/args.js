@@ -30,7 +30,7 @@ if (args & args.length > 0) {
 }
 
 function consleHelp() {
-  console.log('       - You need help?')
+  console.log('       - Do you need help?')
   console.log('       - There is nothing I can help')
   console.log('       - go home, please')
 }
@@ -38,23 +38,23 @@ function consleHelp() {
 function normal() {
   var requireAge = 18;
 
-cursor.fg.green().write('enter you age: ').fg.reset().write('\n')
+  cursor.fg.green().write('enter you age: ').fg.reset().write('\n')
 
-process.stdin.setEncoding('utf-8');
+  process.stdin.setEncoding('utf-8');
 
-process.stdin.on('data', function(data) {
-  var age = parseInt(data, 10);
-  if (age < requireAge) {
-    cursor.fg.red().write(`you must be at least ${requireAge} to enter`).fg.reset().write('\n')
-    // console.log('you must be at least %d to enter', requireAge)
-  } else {
-    // console.log('welcome to gayhub')
-    cursor.fg.green().write('welcome to gayhub').fg.reset().write('\n')
-  }
+  process.stdin.on('data', function(data) {
+    var age = parseInt(data, 10);
+    if (age < requireAge) {
+      cursor.fg.red().write(`you must be at least ${requireAge} to enter`).fg.reset().write('\n')
+      // console.log('you must be at least %d to enter', requireAge)
+    } else {
+      // console.log('welcome to gayhub')
+      cursor.fg.green().write('welcome to gayhub').fg.reset().write('\n')
+    }
 
-  process.stdin.pause();
-})
+    process.stdin.pause();
+  })
 
-process.stdin.resume();
+  process.stdin.resume();
 
 }
